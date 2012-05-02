@@ -1,0 +1,43 @@
+{
+  "name": "grunt-docs",
+  "description": "Build docs with markdown and YamYam",
+  "version": "0.1.0",
+  "homepage": "https://github.com/shama/grunt-docs",
+  "author": {
+    "name": "Kyle Robinson Young",
+    "email": "kyle@dontkry.com",
+    "url": "http://dontkry.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/shama/grunt-docs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shama/grunt-docs/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/shama/grunt-docs/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "grunt.js",
+  "bin": "bin/grunt-docs",
+  "engines": {
+    "node": "*"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "dependencies": {
+    "grunt": "~0.3.9",
+    "YamYam": "~0.2.4",
+    "jade": "~0.25.0"
+  },
+  "devDependencies": {
+    "grunt": "~0.3.9"
+  },
+  "keywords": [
+    "gruntplugin"
+  ]
+}
