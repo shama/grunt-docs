@@ -41,6 +41,24 @@ files will joined with a newline.
 You can also have each file be generated independently by setting `dest` as
 such: `dest: 'docs/*'`. The `*` is important.
 
+### Layout
+
+The var `blocks` will be passed to the layout. It is an array of converted
+block objects: `{data:'html here', file:'filepath'}`. An example jade layout
+would be:
+
+```
+!!! 5
+html
+  body
+    p Docs!
+    ul
+      each block in blocks
+        //file:
+          = block.file
+        li!= block.data
+```
+
 ## Contributing
 
 Please use the issue tracker and pull requests.
