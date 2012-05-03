@@ -1,7 +1,10 @@
 module.exports = function(grunt) {
-
-  // Project configuration.
   grunt.initConfig({
+    docs: {
+      layout: 'test/fixtures/layout.jade',
+      src: ['test/fixtures/*.md'],
+      dest: 'test/fixtures/*'
+    },
     test: {
       files: ['test/**/*.js']
     },
@@ -30,11 +33,6 @@ module.exports = function(grunt) {
       globals: {}
     }
   });
-
-  // Load local tasks.
   grunt.loadTasks('tasks');
-
-  // Default task.
   grunt.registerTask('default', 'lint test');
-
 };
