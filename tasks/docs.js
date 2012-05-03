@@ -46,8 +46,8 @@ module.exports = function(grunt) {
           grunt.log.writeln('File ' + dest + ' created.');
         }
       } else {
-        // Output simple joined files
-        grunt.file.write(dest, blocks.join("\n"));
+        // Output simple joined files to single
+        grunt.file.write(dest, grunt.utils._.pluck(blocks, 'data').join("\n"));
         grunt.log.writeln('File ' + dest + ' created.');
       }
     }
