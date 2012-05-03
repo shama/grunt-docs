@@ -9,10 +9,10 @@
 module.exports = function(grunt) {
   grunt.registerMultiTask('docs', 'Build docs with YamYam', function() {
     var yamyam = require('YamYam'),
-      path = require('path'),
-      dest = this.file.dest,
-      blocks = [],
-      files = grunt.file.expandFiles(this.file.src);
+        path = require('path'),
+        dest = this.file.dest,
+        blocks = [],
+        files = grunt.file.expandFiles(this.file.src);
     files.forEach(function(filepath) {
       // Ignore _ prepended files
       if (path.basename(filepath).substr(0, 1) === '_') {
@@ -34,9 +34,9 @@ module.exports = function(grunt) {
           // Output multiple layout files
           blocks.forEach(function(block) {
             var name = path.basename(block.file, '.md'),
-              dir = path.dirname(dest),
-              html = layout({blocks:[block]}),
-              filepath = path.normalize(dir + '/' + name + '.html');
+                dir = path.dirname(dest),
+                html = layout({blocks:[block]}),
+                filepath = path.normalize(dir + '/' + name + '.html');
             grunt.file.write(filepath, html);
             grunt.log.writeln('File ' + filepath + ' created.');
           });
