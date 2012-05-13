@@ -1,9 +1,11 @@
 module.exports = function(grunt) {
   grunt.initConfig({
     docs: {
-      layout: 'test/fixtures/layout.jade',
-      src: ['test/fixtures/*.md'],
-      dest: 'test/fixtures/*'
+      html: {
+        layout: 'test/fixtures/layout.jade',
+        src: ['test/fixtures/*.md'],
+        dest: 'test/fixtures/*'
+      }
     },
     test: {
       files: ['test/**/*.js']
