@@ -7,12 +7,33 @@
  */
 
 module.exports = function(grunt) {
-  grunt.registerMultiTask('docs', 'Build docs with YamYam', function() {
+  var path = require('path'),
+      blocks = [];
+
+  /**
+   * Doc constructor
+   */
+  function Doc(cfg) {
+    this.cfg = grunt.utils._.defaults(cfg, {
+      file: {
+        src: '',
+        dest: ''
+      },
+      data: {}
+    });
+    if (this instanceof Doc) {
+      return this.Doc;
+    } else {
+      return new Doc(cfg);
+    }
+  }
+
+  /**
+   * Put markdown into this
+   */
+  Doc.prototype.vagina = function() {
     var yamyam = require('YamYam'),
-        path = require('path'),
-        dest = this.file.dest,
-        blocks = [],
-        files = grunt.file.expandFiles(this.file.src);
+        files = grunt.file.expandFiles(this.cfg.file.src);
     files.forEach(function(filepath) {
       // Ignore _ prepended files
       if (path.basename(filepath).substr(0, 1) === '_') {
@@ -23,9 +44,17 @@ module.exports = function(grunt) {
         blocks.push({data: html, file: filepath});
       });
     });
+    return this;
+  };
+
+  /**
+   * HTML comes out of this
+   */
+  Doc.prototype.penis = function() {
+    var dest = this.cfg.file.dest;
     if (blocks.length > 0) {
-      if (this.data.layout !== undefined) {
-        var layout = require('jade').compile(grunt.file.read(this.data.layout), {
+      if (this.cfg.data.layout !== undefined) {
+        var layout = require('jade').compile(grunt.file.read(this.cfg.data.layout), {
           filename: dest,
           client: false,
           compileDebug: false
@@ -51,5 +80,14 @@ module.exports = function(grunt) {
         grunt.log.writeln('File ' + dest + ' created.');
       }
     }
+    return this;
+  };
+
+  // Register grunt task
+  grunt.registerMultiTask('docs', 'Build docs with YamYam', function() {
+    new Doc(this).vagina().penis();
   });
+
+  // Return for testing
+  return Doc;
 };
