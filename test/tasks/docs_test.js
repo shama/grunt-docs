@@ -22,13 +22,13 @@ exports['docs'] = {
       data: { layout: 'test/fixtures/layout.jade' }
     };
 
-    this.Doc(fixture).vagina().penis();
+    this.Doc(fixture).input().output();
 
     var result = fs.readFileSync(dest, 'utf8');
     var expected = [
       '<header>Docs!</header>',
-      '<section><h2>Three</h2></section>',
       '<section><h1>Doc One</h1><p>Yo Yo Yo</p></section>',
+      '<section><h2>Three</h2></section>',
       '<section><h1>Two</h1><ul><li>1</li><li>2</li><li>3</li></ul></section>'
     ].join('');
     test.equal(result, expected);
@@ -44,12 +44,12 @@ exports['docs'] = {
       data: {}
     };
 
-    this.Doc(fixture).vagina().penis();
+    this.Doc(fixture).input().output();
 
     var result = fs.readFileSync(dest, 'utf8');
     var expected = [
-      '<h2>Three</h2>',
       '<h1>Doc One</h1><p>Yo Yo Yo</p>',
+      '<h2>Three</h2>',
       '<h1>Two</h1><ul><li>1</li><li>2</li><li>3</li></ul>'
     ].join('\n');
     test.equal(result, expected);

@@ -7,6 +7,9 @@
  */
 
 module.exports = function(grunt) {
+
+  'use strict';
+
   var path = require('path'),
       blocks = [];
 
@@ -15,10 +18,7 @@ module.exports = function(grunt) {
    */
   function Doc(cfg) {
     this.cfg = grunt.utils._.defaults(cfg, {
-      file: {
-        src: '',
-        dest: ''
-      },
+      file: grunt.task.current.file,
       data: {}
     });
     if (this instanceof Doc) {
@@ -31,7 +31,7 @@ module.exports = function(grunt) {
   /**
    * Put markdown into this
    */
-  Doc.prototype.vagina = function() {
+  Doc.prototype.input = function() {
     var yamyam = require('YamYam'),
         files = grunt.file.expandFiles(this.cfg.file.src);
     files.forEach(function(filepath) {
@@ -50,7 +50,7 @@ module.exports = function(grunt) {
   /**
    * HTML comes out of this
    */
-  Doc.prototype.penis = function() {
+  Doc.prototype.output = function() {
     var dest = this.cfg.file.dest;
     if (blocks.length > 0) {
       if (this.cfg.data.layout !== undefined) {
@@ -85,7 +85,7 @@ module.exports = function(grunt) {
 
   // Register grunt task
   grunt.registerMultiTask('docs', 'Build docs with YamYam', function() {
-    new Doc(this).vagina().penis();
+    new Doc(this).input().output();
   });
 
   // Return for testing
