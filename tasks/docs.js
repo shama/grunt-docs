@@ -11,6 +11,7 @@ module.exports = function(grunt) {
   'use strict';
 
   var path = require('path'),
+      jade = require('jade'),
       blocks = [];
 
   /**
@@ -54,7 +55,7 @@ module.exports = function(grunt) {
     var dest = this.cfg.file.dest;
     if (blocks.length > 0) {
       if (this.cfg.data.layout !== undefined) {
-        var layout = require('jade').compile(grunt.file.read(this.cfg.data.layout), {
+        var layout = jade.compile(grunt.file.read(this.cfg.data.layout), {
           filename: dest,
           client: false,
           compileDebug: false
