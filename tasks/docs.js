@@ -7,88 +7,104 @@
  */
 
 module.exports = function(grunt) {
-
   'use strict';
 
-  var path = require('path'),
-      jade = require('jade'),
-      blocks = [];
+  var docpad = require('docpad');
+  var path = require('path');
 
-  /**
-   * Doc constructor
-   */
-  function Doc(cfg) {
-    this.cfg = grunt.utils._.defaults(cfg, {
-      file: grunt.task.current.file,
-      data: {}
-    });
-    if (this instanceof Doc) {
-      return this.Doc;
-    } else {
-      return new Doc(cfg);
-    }
-  }
+  // TODO: ditch this when grunt v0.4 is released
+  grunt.util = grunt.util || grunt.utils;
 
-  /**
-   * Put markdown into this
-   */
-  Doc.prototype.input = function() {
-    var yamyam = require('YamYam'),
-        files = grunt.file.expandFiles(this.cfg.file.src);
-    files.forEach(function(filepath) {
-      // Ignore _ prepended files
-      if (path.basename(filepath).substr(0, 1) === '_') {
-        return;
-      }
-      // Markdown -> HTML
-      yamyam.parse(grunt.file.read(filepath), function(err, html) {
-        blocks.push({data: html, file: filepath});
-      });
-    });
-    return this;
+  var _ = grunt.util._;
+  var async = grunt.util.async;
+
+  var docpadError = function(e) {
+    var pos = '[' + 'L' + e.line + ':' + ('C' + e.column) + ']';
+    grunt.log.error(e.filename + ': ' + pos + ' ' + e.message);
+    grunt.fail.warn("Error compiling with docpad.", 1);
   };
 
-  /**
-   * HTML comes out of this
-   */
-  Doc.prototype.output = function() {
-    var dest = this.cfg.file.dest;
-    if (blocks.length > 0) {
-      if (this.cfg.data.layout !== undefined) {
-        var layout = jade.compile(grunt.file.read(this.cfg.data.layout), {
-          filename: dest,
-          client: false,
-          compileDebug: false
-        });
-        if (dest.substr(-1, 1) === '*') {
-          // Output multiple layout files
-          blocks.forEach(function(block) {
-            var name = path.basename(block.file, '.md'),
-                dir = path.dirname(dest),
-                html = layout({blocks:[block]}),
-                filepath = path.normalize(dir + '/' + name + '.html');
-            grunt.file.write(filepath, html);
-            grunt.log.writeln('File ' + filepath + ' created.');
-          });
-        } else {
-          // Output single layout file
-          grunt.file.write(dest, layout({blocks:blocks}));
-          grunt.log.writeln('File ' + dest + ' created.');
+  var resolveDest = function(base, file) {
+    var baseParts = base.split(path.sep);
+    var fileParts = file.split(path.sep);
+    return _.difference(fileParts, baseParts).join(path.sep);
+  };
+
+  var resolveExt = function(file) {
+    var ext = path.extname(file);
+    return file.substr(0, file.lastIndexOf(ext));
+  };
+
+  grunt.registerMultiTask('docs', 'Produce docs with docpad', function() {
+    var options = grunt.helper('options', this);
+
+    var files = this.file.src;
+    var dest = this.file.dest;
+
+    var done = this.async();
+
+    grunt.verbose.writeflags(options, "Options");
+
+    async.forEachSeries(files, function(file, next) {
+      var srcBase = grunt.helper('_docs-findbase', file);
+      var srcFiles = grunt.file.expandFiles(file);
+
+      grunt.helper('docpad', srcFiles, {}, function(result) {
+        for (var resultPath in result) {
+          var resultData = result[resultPath];
+          var destPath = resolveExt(dest + resolveDest(srcBase, resultPath));
+          grunt.file.write(destPath, resultData);
+          grunt.log.writeln("File '" + destPath + "' created.");
         }
-      } else {
-        // Output simple joined files to single
-        grunt.file.write(dest, grunt.utils._.pluck(blocks, 'data').join("\n"));
-        grunt.log.writeln('File ' + dest + ' created.');
-      }
-    }
-    return this;
-  };
+        next();
+      });
 
-  // Register grunt task
-  grunt.registerMultiTask('docs', 'Build docs with YamYam', function() {
-    new Doc(this).input().output();
+    }, function() {
+      done();
+    });
+
   });
 
-  // Return for testing
-  return Doc;
+  grunt.registerHelper('docpad', function(files, docpadConfig, callback) {
+    docpad.createInstance(docpadConfig, function(err, inst) {
+      if (err) {
+        docpadError(err);
+      }
+
+      var output = {};
+
+      if (_.isString(files)) {
+        files = [files];
+      }
+
+      async.forEachSeries(files, function(file, next) {
+        var options = {
+          path: file,
+          renderSingleExtensions: true
+        };
+        inst.action('render', options, function(err, result) {
+          if (err) {
+            docpadError(err);
+          }
+          output[file] = result;
+
+          next();
+        });
+      }, function() {
+        callback(output);
+      });
+
+    });
+  });
+
+  grunt.registerHelper('_docs-findbase', function(file) {
+    var base;
+    if (file.indexOf('*') !== -1) {
+      base = file.substr(0, file.indexOf('*'));
+    } else {
+      base = path.dirname(file) + path.sep;
+    }
+    return base;
+  });
+
 };

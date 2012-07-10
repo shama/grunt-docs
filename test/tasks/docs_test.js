@@ -6,55 +6,48 @@
  * Licensed under the MIT license.
  */
 
-var grunt = require('grunt'),
-    fs = require('fs');
+var grunt = require('grunt');
+var path = require('path');
 
 exports['docs'] = {
   setUp: function(done) {
-    this.Doc = require(grunt.task.getFile('docs.js'))(grunt);
     done();
   },
-  'single file with layout': function(test) {
+  'docpad': function(test) {
     test.expect(1);
-    var dest = 'test/fixtures/single.html';
-    var fixture = {
-      file: { src: ['test/fixtures/**/*.md'], dest: dest },
-      data: { layout: 'test/fixtures/layout.jade' }
-    };
 
-    this.Doc(fixture).input().output();
-
-    var result = fs.readFileSync(dest, 'utf8');
-    var expected = [
-      '<header>Docs!</header>',
-      '<section><h1>Doc One</h1><p>Yo Yo Yo</p></section>',
-      '<section><h2>Three</h2></section>',
-      '<section><h1>Two</h1><ul><li>1</li><li>2</li><li>3</li></ul></section>'
-    ].join('');
-    test.equal(result, expected);
-
-    fs.unlinkSync(dest);
-    test.done();
+    grunt.helper('docpad', [
+      'test/fixtures/testdocs/layout.html.jade',
+      'test/fixtures/testdocs/one.html.md',
+      'test/fixtures/testdocs/sub/three.html.md'
+    ], {}, function(result) {
+      var expected = {};
+      expected['test/fixtures/testdocs/layout.html.jade'] = '<header>Docs!</header><ul><li>One</li><li>Two</li></ul>';
+      expected['test/fixtures/testdocs/one.html.md'] = '<h1>Doc One</h1>\n\n<p>Yo Yo Yo</p>';
+      expected['test/fixtures/testdocs/sub/three.html.md'] = '<h2>Three</h2>';
+      test.deepEqual(result, expected);
+      test.done();
+    });
   },
-  'single file without layout': function(test) {
+  'docpad single': function(test) {
     test.expect(1);
-    var dest = 'test/fixtures/single.html';
-    var fixture = {
-      file: { src: ['test/fixtures/**/*.md'], dest: dest },
-      data: {}
-    };
+    grunt.helper('docpad', 'test/fixtures/testdocs2/test.html.md', {}, function(result) {
+      test.deepEqual(result, {'test/fixtures/testdocs2/test.html.md': '<h1>Test</h1>'});
+      test.done();
+    });
+  },
+  'docs-findbase': function(test) {
+    test.expect(3);
 
-    this.Doc(fixture).input().output();
+    var result = grunt.helper('_docs-findbase', 'fixtures/output/**/*');
+    test.deepEqual(result.split(path.sep), ['fixtures', 'output', '']);
 
-    var result = fs.readFileSync(dest, 'utf8');
-    var expected = [
-      '<h1>Doc One</h1><p>Yo Yo Yo</p>',
-      '<h2>Three</h2>',
-      '<h1>Two</h1><ul><li>1</li><li>2</li><li>3</li></ul>'
-    ].join('\n');
-    test.equal(result, expected);
+    result = grunt.helper('_docs-findbase', 'fixtures/output/*');
+    test.deepEqual(result.split(path.sep), ['fixtures', 'output', '']);
 
-    fs.unlinkSync(dest);
+    result = grunt.helper('_docs-findbase', 'fixtures/output/test.md');
+    test.deepEqual(result.split(path.sep), ['fixtures', 'output', '']);
+
     test.done();
   }
 };

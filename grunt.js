@@ -1,10 +1,14 @@
 module.exports = function(grunt) {
+  grunt.loadNpmTasks('grunt-contrib');
+
+  grunt.file.mkdir('test/fixtures/output/');
+
   grunt.initConfig({
+    clean: ['test/fixtures/output/*'],
     docs: {
-      html: {
-        layout: 'test/fixtures/layout.jade',
-        src: ['test/fixtures/*.md'],
-        dest: 'test/fixtures/*'
+      www: {
+        src: ['test/fixtures/testdocs/**/*', 'test/fixtures/testdocs2/test.html.md'],
+        dest: 'test/fixtures/output/'
       }
     },
     test: {
@@ -36,5 +40,5 @@ module.exports = function(grunt) {
     }
   });
   grunt.loadTasks('tasks');
-  grunt.registerTask('default', 'lint test');
+  grunt.registerTask('default', 'lint clean docs');
 };

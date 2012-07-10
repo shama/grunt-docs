@@ -1,9 +1,7 @@
 # grunt-docs
 
-A grunt plugin to build HTML docs from markdown files.
-
-Uses [YamYam](https://github.com/sokra/YamYam) to convert markdown and
-[jade](https://github.com/visionmedia/jade) for layouts.
+A grunt plugin to build docs from a variety of file types using
+[DocPad](https://github.com/bevry/docpad).
 
 ## Getting Started
 
@@ -25,52 +23,44 @@ This plugin provides the task: `docs`. Here is an example config block:
 
 ```javascript
 docs: {
-  html: {
-    layout: 'docs/api/layout.jade',
-    src: ['docs/api/*.md'],
-    dest: 'docs/index.html'
+  www: {
+    src: ['docs/api/**/*'],
+    dest: 'out/'
   }
 }
 ```
 
-This will compile all the markdown files (without a `_` prepended) from the
-`docs/api/` folder. Then use `layout.jade` to construct the final
-`docs/index.html`. If no layout is specified then all the compiled markdown
-files will joined with a newline.
+This will compile all the files within the `docs/api/` folder and sub folders.
+Then output the files to the `out/` folder, duplicating the same path structure.
 
-You can also have each file be generated independently by setting `dest` as
-such: `dest: 'docs/*'`. The `*` is important.
+The conversion of your files is based on its extension. For example if I wanted
+a file in markdown to be converted to html, I would name the file:
+`myfile.html.md`. After the file is converted it will be named: `myfile.html`.
 
-### Layout
+### DocPad
 
-The var `blocks` will be passed to the layout. It is an array of converted
-block objects: `{data:'html here', file:'filepath'}`. An example jade layout
-would be:
+grunt-docs supports all the render
+[types DocPad supports](https://github.com/bevry/docpad/wiki/Plugins). Depending
+on the types you want to convert, you will need to install the additional
+dependencies.
 
-```
-!!! 5
-html
-  body
-    p Docs!
-    ul
-      each block in blocks
-        //file:
-          = block.file
-        li!= block.data
-```
+For example if you would like to convert `css/style.css.styl` you would need to
+install the `docpad-plugin-stylus` module.
+
+### Included Helpers
+
+#### `docpad`
+
+Use the `docpad` helper in your grunt module to convert files with DocPad.
 
 ## Contributing
 
 Please use the issue tracker and pull requests.
 
-## Future Plans
-
-* Allow other templating langs
-* Hooks for userland formatting
-* JSON output
-
 ## Release History
 
+* 0.2.0 Convert to use DocPad
+* 0.1.1 More testable structure of module
 * 0.1.0 Initial release
 
 ## License
