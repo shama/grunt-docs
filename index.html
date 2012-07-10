@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>grunt-docs by shama</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>grunt-docs</h1>
+        <p>Grunt plugin for building docs from a variety of file types using DocPad.</p>
+
+        <p class="view"><a href="https://github.com/shama/grunt-docs">View the Project on GitHub <small>shama/grunt-docs</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/shama/grunt-docs/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/shama/grunt-docs/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/shama/grunt-docs">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p>A grunt plugin to build docs from a variety of file types using
+<a href="https://github.com/bevry/docpad">DocPad</a>.</p>
+
+<h2>Getting Started</h2>
+
+<p>Install this grunt plugin next to your project's
+<a href="https://github.com/cowboy/grunt/blob/master/docs/getting_started.md">grunt.js gruntfile</a> with: <code>npm install grunt-docs</code></p>
+
+<p>Then add this line to your project's <code>grunt.js</code> gruntfile:</p>
+
+<div class="highlight">
+<pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">loadNpmTasks</span><span class="p">(</span><span class="s1">'grunt-docs'</span><span class="p">);</span>
+</pre>
+</div>
+
+
+<h2>Documentation</h2>
+
+<p>This plugin provides the task: <code>docs</code>. Here is an example config block:</p>
+
+<div class="highlight">
+<pre><span class="nx">docs</span><span class="o">:</span> <span class="p">{</span>
+  <span class="nx">www</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">src</span><span class="o">:</span> <span class="p">[</span><span class="s1">'docs/api/**/*'</span><span class="p">],</span>
+    <span class="nx">dest</span><span class="o">:</span> <span class="s1">'out/'</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre>
+</div>
+
+
+<p>This will compile all the files within the <code>docs/api/</code> folder and sub folders.
+Then output the files to the <code>out/</code> folder, duplicating the same path structure.</p>
+
+<p>The conversion of your files is based on its extension. For example if I wanted
+a file in markdown to be converted to html, I would name the file:
+<code>myfile.html.md</code>. After the file is converted it will be named: <code>myfile.html</code>.</p>
+
+<h3>DocPad</h3>
+
+<p>grunt-docs supports all the render
+<a href="https://github.com/bevry/docpad/wiki/Plugins">types DocPad supports</a>. Depending
+on the types you want to convert, you will need to install the additional
+dependencies.</p>
+
+<p>For example if you would like to convert <code>css/style.css.styl</code> you would need to
+install the <code>docpad-plugin-stylus</code> module.</p>
+
+<h3>Included Helpers</h3>
+
+<h4><code>docpad</code></h4>
+
+<p>Use the <code>docpad</code> helper in your grunt module to convert files with DocPad.</p>
+
+<div class="highlight">
+<pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">helper</span><span class="p">(</span><span class="s1">'docpad'</span><span class="p">,</span> <span class="s1">'myfile.html.md'</span><span class="p">,</span> <span class="p">{},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">out</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// out = {'myfile.html.md': 'The compiled HTML of the file'};</span>
+<span class="p">});</span>
+</pre>
+</div>
+
+
+<p>You can pass an array of files instead of a single file path to convert multiple
+files. The second argument is an object literal for DocPad configurations.</p>
+
+<h2>Contributing</h2>
+
+<p>Please use the issue tracker and pull requests.</p>
+
+<h2>Release History</h2>
+
+<ul>
+<li>0.2.0 Convert to use DocPad</li>
+<li>0.1.1 More testable structure of module</li>
+<li>0.1.0 Initial release</li>
+</ul><h2>License</h2>
+
+<p>Copyright (c) 2012 Kyle Robinson Young</p>
+
+<p>Licensed under the MIT license.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/shama">shama</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-31383988-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
