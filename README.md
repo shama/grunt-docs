@@ -53,6 +53,15 @@ install the `docpad-plugin-stylus` module.
 
 Use the `docpad` helper in your grunt module to convert files with DocPad.
 
+```javascript
+grunt.helper('docpad', 'myfile.html.md', {}, function(out) {
+  // out = {'myfile.html.md': 'The compiled HTML of the file'};
+});
+```
+
+You can pass an array of files instead of a single file path to convert multiple
+files. The second argument is an object literal for DocPad configurations.
+
 ## Contributing
 
 Please use the issue tracker and pull requests.
