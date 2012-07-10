@@ -40,5 +40,5 @@ module.exports = function(grunt) {
     }
   });
   grunt.loadTasks('tasks');
-  grunt.registerTask('default', 'lint clean docs');
+  grunt.registerTask('default', 'lint clean docs test clean');
 };

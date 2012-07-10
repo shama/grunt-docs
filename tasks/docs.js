@@ -25,14 +25,14 @@ module.exports = function(grunt) {
   };
 
   var resolveDest = function(base, file) {
-    var baseParts = base.split(path.sep);
-    var fileParts = file.split(path.sep);
-    return _.difference(fileParts, baseParts).join(path.sep);
+    return _.difference(
+      file.split(path.sep),
+      base.split(path.sep)
+    ).join(path.sep);
   };
 
   var resolveExt = function(file) {
-    var ext = path.extname(file);
-    return file.substr(0, file.lastIndexOf(ext));
+    return file.substr(0, file.lastIndexOf(path.extname(file)));
   };
 
   grunt.registerMultiTask('docs', 'Produce docs with docpad', function() {
