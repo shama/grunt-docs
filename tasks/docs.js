@@ -36,14 +36,10 @@ module.exports = function(grunt) {
   };
 
   grunt.registerMultiTask('docs', 'Produce docs with docpad', function() {
-    var options = grunt.helper('options', this);
-
     var files = this.file.src;
     var dest = this.file.dest;
 
     var done = this.async();
-
-    grunt.verbose.writeflags(options, "Options");
 
     async.forEachSeries(files, function(file, next) {
       var srcBase = grunt.helper('_docs-findbase', file);
