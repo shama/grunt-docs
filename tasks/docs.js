@@ -94,13 +94,11 @@ module.exports = function(grunt) {
   });
 
   grunt.registerHelper('_docs-findbase', function(file) {
-    var base;
     if (file.indexOf('*') !== -1) {
-      base = file.substr(0, file.indexOf('*'));
+      return file.substr(0, file.indexOf('*'));
     } else {
-      base = path.dirname(file) + path.sep;
+      return path.dirname(file) + path.sep;
     }
-    return base;
   });
 
 };
