@@ -1,7 +1,7 @@
 {
   "name": "grunt-docs",
   "description": "Grunt plugin for building docs from a variety of file types using DocPad.",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "homepage": "https://github.com/shama/grunt-docs",
   "author": {
     "name": "Kyle Robinson Young",
@@ -30,7 +30,6 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "grunt": "~0.3.x",
     "docpad": "~6.1.x",
     "docpad-plugin-markdown": "~2.0.x",
     "docpad-plugin-jade": "~2.0.x"
