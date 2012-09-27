@@ -28,7 +28,9 @@
         </ul>
       </header>
       <section>
-        <p>A grunt plugin to build docs from a variety of file types using
+        <h1>grunt-docs</h1>
+
+<p>A grunt plugin to build docs from a variety of file types using
 <a href="https://github.com/bevry/docpad">DocPad</a>.</p>
 
 <h2>Getting Started</h2>
@@ -38,26 +40,20 @@
 
 <p>Then add this line to your project's <code>grunt.js</code> gruntfile:</p>
 
-<div class="highlight">
-<pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">loadNpmTasks</span><span class="p">(</span><span class="s1">'grunt-docs'</span><span class="p">);</span>
-</pre>
-</div>
-
+<div class="highlight"><pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">loadNpmTasks</span><span class="p">(</span><span class="s1">'grunt-docs'</span><span class="p">);</span>
+</pre></div>
 
 <h2>Documentation</h2>
 
 <p>This plugin provides the task: <code>docs</code>. Here is an example config block:</p>
 
-<div class="highlight">
-<pre><span class="nx">docs</span><span class="o">:</span> <span class="p">{</span>
+<div class="highlight"><pre><span class="nx">docs</span><span class="o">:</span> <span class="p">{</span>
   <span class="nx">www</span><span class="o">:</span> <span class="p">{</span>
     <span class="nx">src</span><span class="o">:</span> <span class="p">[</span><span class="s1">'docs/api/**/*'</span><span class="p">],</span>
     <span class="nx">dest</span><span class="o">:</span> <span class="s1">'out/'</span>
   <span class="p">}</span>
 <span class="p">}</span>
-</pre>
-</div>
-
+</pre></div>
 
 <p>This will compile all the files within the <code>docs/api/</code> folder and sub folders.
 Then output the files to the <code>out/</code> folder, duplicating the same path structure.</p>
@@ -76,23 +72,6 @@ dependencies.</p>
 <p>For example if you would like to convert <code>css/style.css.styl</code> you would need to
 install the <code>docpad-plugin-stylus</code> module.</p>
 
-<h3>Included Helpers</h3>
-
-<h4><code>docpad</code></h4>
-
-<p>Use the <code>docpad</code> helper in your grunt module to convert files with DocPad.</p>
-
-<div class="highlight">
-<pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">helper</span><span class="p">(</span><span class="s1">'docpad'</span><span class="p">,</span> <span class="s1">'myfile.html.md'</span><span class="p">,</span> <span class="p">{},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">out</span><span class="p">)</span> <span class="p">{</span>
-  <span class="c1">// out = {'myfile.html.md': 'The compiled HTML of the file'};</span>
-<span class="p">});</span>
-</pre>
-</div>
-
-
-<p>You can pass an array of files instead of a single file path to convert multiple
-files. The second argument is an object literal for DocPad configurations.</p>
-
 <h2>Contributing</h2>
 
 <p>Please use the issue tracker and pull requests.</p>
@@ -100,6 +79,7 @@ files. The second argument is an object literal for DocPad configurations.</p>
 <h2>Release History</h2>
 
 <ul>
+<li>0.3.0 Update to DocPad 6.6.6. Refactor for migration to Grunt 0.4.</li>
 <li>0.2.0 Convert to use DocPad</li>
 <li>0.1.1 More testable structure of module</li>
 <li>0.1.0 Initial release</li>
