@@ -18,6 +18,9 @@ module.exports = function(grunt) {
 
   grunt.registerMultiTask('docs', 'Produce docs with docpad', function() {
     var helpers = require('grunt-contrib-lib').init(grunt);
+    var options = helpers.options(this);
+
+    grunt.verbose.writeflags(options, 'Options');
 
     // TODO: ditch this when grunt v0.4 is released
     this.files = this.files || helpers.normalizeMultiTaskFiles(this.data, this.target);
@@ -36,7 +39,7 @@ module.exports = function(grunt) {
         return next();
       }
 
-      docs.docpad(srcFiles, {}, function(results) {
+      docs.docpad(srcFiles, options, function(results) {
         grunt.util._.each(results, function(data, filepath) {
           var destPath = file.dest + docs.guessBasePath(filepath, file.src);
           grunt.file.write(destPath, data);
