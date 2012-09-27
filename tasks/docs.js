@@ -9,96 +9,44 @@
 module.exports = function(grunt) {
   'use strict';
 
-  var docpad = require('docpad');
-  var path = require('path');
-
   // TODO: ditch this when grunt v0.4 is released
   grunt.util = grunt.util || grunt.utils;
 
-  var _ = grunt.util._;
   var async = grunt.util.async;
-
-  var docpadError = function(e) {
-    var pos = '[' + 'L' + e.line + ':' + ('C' + e.column) + ']';
-    grunt.log.error(e.filename + ': ' + pos + ' ' + e.message);
-    grunt.fail.warn("Error compiling with docpad.", 1);
-  };
-
-  var resolveDest = function(base, file) {
-    return _.difference(
-      file.split(path.sep),
-      base.split(path.sep)
-    ).join(path.sep);
-  };
-
-  var resolveExt = function(file) {
-    return file.substr(0, file.lastIndexOf(path.extname(file)));
-  };
+  var docs = require('./lib/docs').init(grunt);
+  var path = require('path');
 
   grunt.registerMultiTask('docs', 'Produce docs with docpad', function() {
-    var files = this.file.src;
-    var dest = this.file.dest;
+    var helpers = require('grunt-contrib-lib').init(grunt);
+
+    // TODO: ditch this when grunt v0.4 is released
+    this.files = this.files || helpers.normalizeMultiTaskFiles(this.data, this.target);
 
     var done = this.async();
 
-    async.forEachSeries(files, function(file, next) {
-      var srcBase = grunt.helper('_docs-findbase', file);
-      var srcFiles = grunt.file.expandFiles(file);
+    async.forEachSeries(this.files, function(file, next) {
+      file.dest = path.normalize(file.dest);
+      if (typeof file.src === 'string') {
+        file.src = [file.src];
+      }
+      var srcFiles = grunt.file.expandFiles(file.src);
 
-      grunt.helper('docpad', srcFiles, {}, function(result) {
-        for (var resultPath in result) {
-          var resultData = result[resultPath];
-          var destPath = resolveExt(dest + resolveDest(srcBase, resultPath));
-          grunt.file.write(destPath, resultData);
-          grunt.log.writeln("File '" + destPath + "' created.");
-        }
+      if (srcFiles.length === 0) {
+        grunt.log.writeln('Unable to compile; no valid source files were found.');
+        return next();
+      }
+
+      docs.docpad(srcFiles, {}, function(results) {
+        grunt.util._.each(results, function(data, filepath) {
+          var destPath = file.dest + docs.guessBasePath(filepath, file.src);
+          grunt.file.write(destPath, data);
+          grunt.log.ok("File '" + destPath + "' created.");
+        });
         next();
       });
 
-    }, function() {
-      done();
-    });
+    }, done);
 
-  });
-
-  grunt.registerHelper('docpad', function(files, docpadConfig, callback) {
-    docpad.createInstance(docpadConfig, function(err, inst) {
-      if (err) {
-        docpadError(err);
-      }
-
-      var output = {};
-
-      if (_.isString(files)) {
-        files = [files];
-      }
-
-      async.forEachSeries(files, function(file, next) {
-        var options = {
-          path: file,
-          renderSingleExtensions: true
-        };
-        inst.action('render', options, function(err, result) {
-          if (err) {
-            docpadError(err);
-          }
-          output[file] = result;
-
-          next();
-        });
-      }, function() {
-        callback(output);
-      });
-
-    });
-  });
-
-  grunt.registerHelper('_docs-findbase', function(file) {
-    if (file.indexOf('*') !== -1) {
-      return file.substr(0, file.indexOf('*'));
-    } else {
-      return path.dirname(file) + path.sep;
-    }
   });
 
 };

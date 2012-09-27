@@ -1,5 +1,5 @@
 module.exports = function(grunt) {
-  grunt.loadNpmTasks('grunt-contrib');
+  grunt.loadNpmTasks('grunt-contrib-clean');
 
   grunt.file.mkdir('test/fixtures/output/');
 
@@ -12,7 +12,7 @@ module.exports = function(grunt) {
       }
     },
     test: {
-      files: ['test/**/*.js']
+      files: ['test/**/*_test.js']
     },
     lint: {
       files: ['grunt.js', 'tasks/**/*.js', 'test/**/*.js']
@@ -40,5 +40,5 @@ module.exports = function(grunt) {
     }
   });
   grunt.loadTasks('tasks');
-  grunt.registerTask('default', 'lint clean docs test clean');
+  grunt.registerTask('default', ['lint', 'clean', 'docs', 'test', 'clean']);
 };

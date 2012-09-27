@@ -47,27 +47,13 @@ dependencies.
 For example if you would like to convert `css/style.css.styl` you would need to
 install the `docpad-plugin-stylus` module.
 
-### Included Helpers
-
-#### `docpad`
-
-Use the `docpad` helper in your grunt module to convert files with DocPad.
-
-```javascript
-grunt.helper('docpad', 'myfile.html.md', {}, function(out) {
-  // out = {'myfile.html.md': 'The compiled HTML of the file'};
-});
-```
-
-You can pass an array of files instead of a single file path to convert multiple
-files. The second argument is an object literal for DocPad configurations.
-
 ## Contributing
 
 Please use the issue tracker and pull requests.
 
 ## Release History
 
+* 0.3.0 Update to DocPad 6.6.6. Refactor for migration to Grunt 0.4.
 * 0.2.0 Convert to use DocPad
 * 0.1.1 More testable structure of module
 * 0.1.0 Initial release
