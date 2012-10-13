@@ -30,7 +30,7 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "grunt-contrib-lib": "~0.3.0",
+    "grunt-lib-contrib": "~0.3.0",
     "docpad": "~6.6.6",
     "docpad-plugin-marked": "~2.0.0",
     "docpad-plugin-jade": "~2.0.0"
