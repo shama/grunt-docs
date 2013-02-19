@@ -21,25 +21,31 @@
       "url": "https://github.com/shama/grunt-docs/blob/master/LICENSE-MIT"
     }
   ],
-  "main": "grunt.js",
-  "bin": "bin/grunt-docs",
+  "main": "Gruntfile.js",
   "engines": {
-    "node": "*"
+    "node": ">= 0.8.0"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt nodeunit -v"
   },
   "dependencies": {
-    "grunt-lib-contrib": "~0.3.0",
-    "docpad": "~6.21.*",
+    "docpad": "~6.21.10",
     "docpad-plugin-jade": "~2.3.0",
     "docpad-plugin-marked": "~2.1.0"
   },
   "devDependencies": {
-    "grunt": "~0.3.15",
-    "grunt-contrib-clean": "~0.3.0"
+    "docpad-plugin-partials": "~2.2.0",
+    "docpad-plugin-eco": "~2.0.1",
+    "grunt": "~0.4.0",
+    "grunt-contrib-clean": "~0.4.0",
+    "grunt-contrib-jshint": "~0.1.1",
+    "grunt-contrib-nodeunit": "~0.1.2",
+    "grunt-contrib-watch": "~0.2.0"
   },
   "keywords": [
-    "gruntplugin", "docpad", "markdown", "jade"
+    "gruntplugin",
+    "docpad",
+    "markdown",
+    "jade"
   ]
 }
