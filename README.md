@@ -53,6 +53,7 @@ Please use the issue tracker and pull requests.
 
 ## Release History
 
+* 0.4.0 Support for Grunt v0.4. Update docpad version.
 * 0.3.1 Ability to set DocPad config with `options`.
 * 0.3.0 Update to DocPad 6.6.6. Refactor for migration to Grunt 0.4.
 * 0.2.0 Convert to use DocPad

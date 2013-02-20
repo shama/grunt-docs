@@ -2,28 +2,21 @@
  * grunt-docs
  * https://github.com/shama/grunt-docs
  *
- * Copyright (c) 2012 Kyle Robinson Young
+ * Copyright (c) 2013 Kyle Robinson Young
  * Licensed under the MIT license.
  */
 
 module.exports = function(grunt) {
   'use strict';
 
-  // TODO: ditch this when grunt v0.4 is released
-  grunt.util = grunt.util || grunt.utils;
-
   var async = grunt.util.async;
-  var docs = require('./lib/docs').init(grunt);
+  var docs = require('./lib/docs');
   var path = require('path');
 
   grunt.registerMultiTask('docs', 'Produce docs with docpad', function() {
-    var helpers = require('grunt-contrib-lib').init(grunt);
-    var options = helpers.options(this);
+    var options = this.options();
 
     grunt.verbose.writeflags(options, 'Options');
-
-    // TODO: ditch this when grunt v0.4 is released
-    this.files = this.files || helpers.normalizeMultiTaskFiles(this.data, this.target);
 
     var done = this.async();
 
@@ -32,7 +25,7 @@ module.exports = function(grunt) {
       if (typeof file.src === 'string') {
         file.src = [file.src];
       }
-      var srcFiles = grunt.file.expandFiles(file.src);
+      var srcFiles = grunt.file.expand(file.src);
 
       if (srcFiles.length === 0) {
         grunt.log.writeln('Unable to compile; no valid source files were found.');

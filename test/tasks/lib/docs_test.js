@@ -6,9 +6,11 @@
  * Licensed under the MIT license.
  */
 
+'use strict';
+
 var grunt = require('grunt');
 var path = require('path');
-var docs = require('../../../tasks/lib/docs').init(grunt);
+var docs = require('../../../tasks/lib/docs');
 
 exports.docs = {
   docpad: function(test) {
@@ -19,9 +21,12 @@ exports.docs = {
       'test/fixtures/testdocs/sub/three.html.md'
     ], {}, function(result) {
       var expected = {};
+      Object.keys(result).forEach(function(file) {
+        result[file] = result[file].replace(/\s+/g, '');
+      });
       expected['test/fixtures/testdocs/layout.html.jade'] = '<header>Docs!</header><ul><li>One</li><li>Two</li></ul>';
-      expected['test/fixtures/testdocs/one.html.md'] = '<h1>Doc One</h1>\n<p>Yo Yo Yo</p>\n';
-      expected['test/fixtures/testdocs/sub/three.html.md'] = '<h2>Three</h2>\n';
+      expected['test/fixtures/testdocs/one.html.md'] = '<h1>DocOne</h1><p>YoYoYo</p>';
+      expected['test/fixtures/testdocs/sub/three.html.md'] = '<h2>Three</h2>';
       test.deepEqual(result, expected);
       test.done();
     });

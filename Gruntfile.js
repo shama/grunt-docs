@@ -1,5 +1,5 @@
 module.exports = function(grunt) {
-  grunt.loadNpmTasks('grunt-contrib-clean');
+  'use strict';
 
   grunt.file.mkdir('test/fixtures/output/');
 
@@ -11,17 +11,11 @@ module.exports = function(grunt) {
         dest: 'test/fixtures/output/'
       }
     },
-    test: {
+    nodeunit: {
       files: ['test/**/*_test.js']
     },
-    lint: {
-      files: ['grunt.js', 'tasks/**/*.js', 'test/**/*.js']
-    },
-    watch: {
-      files: '<config:lint.files>',
-      tasks: 'default'
-    },
     jshint: {
+      files: ['grunt.js', 'tasks/**/*.js', 'test/**/*.js'],
       options: {
         curly: true,
         eqeqeq: true,
@@ -34,11 +28,22 @@ module.exports = function(grunt) {
         boss: true,
         eqnull: true,
         node: true,
-        es5: true
-      },
-      globals: {}
-    }
+        es5: true,
+        globals: {}
+      }
+    },
+    watch: {
+      files: ['<%= jshint.files %>'],
+      tasks: ['default']
+    },
   });
+
+  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-nodeunit');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+
   grunt.loadTasks('tasks');
-  grunt.registerTask('default', ['lint', 'clean', 'docs', 'test', 'clean']);
+
+  grunt.registerTask('default', ['jshint', 'clean', 'docs', 'nodeunit', 'clean']);
 };
