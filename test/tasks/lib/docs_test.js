@@ -51,5 +51,41 @@ exports.docs = {
     test.deepEqual(result.split(path.sep), ['fixtures', 'output', '']);
 
     test.done();
+  },
+  guess_base_path: function(test) {
+    test.expect(2);
+
+    var p;
+    var patterns = [
+      'test/fixtures/testdocs/**/*',
+      'test/fixtures/testdocs2/test.html.md'
+    ];
+
+    p = 'test/fixtures/testdocs2/test.html.md';
+    test.equal(path.normalize('test.html'), docs.guessBasePath(p, patterns));
+
+    p = 'test/fixtures/testdocs/sub/three.html.md';
+    test.equal(path.normalize('sub/three.html'), docs.guessBasePath(p, patterns));
+
+    test.done();
+  },
+  copy_dir_structure: function(test) {
+    var expected = grunt.file.expand([
+      'test/fixtures/testdocs/**/*',
+      'test/fixtures/testdocs2/**/*'
+    ]).map(function(p) {
+      p = p.replace(/^test\/fixtures\/testdocs2?/,'');
+      p = p.replace(/(\.\w+)$/,'');
+      p = 'test/fixtures/output' + p;
+      return p;
+    });
+
+    test.expect(expected.length);
+
+    expected.forEach(function(p) {
+      test.ok(grunt.file.exists(p), "Checking file exists: " + p);
+    });
+
+    test.done();
   }
 };

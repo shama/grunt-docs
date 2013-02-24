@@ -22,6 +22,7 @@ docs.guessBasePath = function(file, patterns) {
   var out = false;
   patterns.forEach(function(pattern) {
     var base = docs.findBase(pattern);
+    file = path.normalize(file);
     if (file.substr(0, base.length) === base) {
       out = file.replace(base, '');
     }
@@ -31,11 +32,13 @@ docs.guessBasePath = function(file, patterns) {
 
 // Guesses a base path from a pattern
 docs.findBase = function(file) {
+  var base;
   if (file.indexOf('*') !== -1) {
-    return file.substr(0, file.indexOf('*'));
+    base = file.substr(0, file.indexOf('*'));
   } else {
-    return path.dirname(file) + path.sep;
+    base = path.dirname(file) + path.sep;
   }
+  return path.normalize(base);
 };
 
 // Changes .html.md -> .html

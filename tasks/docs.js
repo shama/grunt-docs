@@ -34,7 +34,7 @@ module.exports = function(grunt) {
 
       docs.docpad(srcFiles, options, function(results) {
         grunt.util._.each(results, function(data, filepath) {
-          var destPath = file.dest + docs.guessBasePath(filepath, file.src);
+          var destPath = file.dest + docs.guessBasePath(filepath, file.orig.src);
           grunt.file.write(destPath, data);
           grunt.log.ok("File '" + destPath + "' created.");
         });
