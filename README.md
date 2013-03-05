@@ -1,51 +1,37 @@
 # grunt-docs
 
-A grunt plugin to build docs from a variety of file types using
-[DocPad](https://github.com/bevry/docpad).
+A grunt plugin to compile using [DocPad](http://docpad.org/).
+
+**ATTENTION: This plugin has changed completely on v0.5. It is now a thin
+wrapper for DocPad generate and not a multitask.**
 
 ## Getting Started
 
 Install this grunt plugin next to your project's
-[grunt.js gruntfile][getting_started] with: `npm install grunt-docs`
+[Gruntfile.js gruntfile][http://gruntjs.com/getting-started] with:
+`npm install grunt-docs`
 
-Then add this line to your project's `grunt.js` gruntfile:
+Then add this line to your project's `Grunfile.js` gruntfile:
 
-```javascript
+```js
 grunt.loadNpmTasks('grunt-docs');
 ```
 
-[grunt.js gruntfile]: https://github.com/cowboy/grunt
-[getting_started]: https://github.com/cowboy/grunt/blob/master/docs/getting_started.md
-
 ## Documentation
 
-This plugin provides the task: `docs`. Here is an example config block:
+This plugin provides the task: `docs`. You can pass in your
+[DocPad configuration](http://docpad.org/docs/config) directly:
 
-```javascript
+```js
 docs: {
-  www: {
-    src: ['docs/api/**/*'],
-    dest: 'out/'
-  }
+  srcPath: 'src/',
+  outPath: 'build/',
 }
 ```
 
-This will compile all the files within the `docs/api/` folder and sub folders.
-Then output the files to the `out/` folder, duplicating the same path structure.
-
-The conversion of your files is based on its extension. For example if I wanted
-a file in markdown to be converted to html, I would name the file:
-`myfile.html.md`. After the file is converted it will be named: `myfile.html`.
-
-### DocPad
-
-grunt-docs supports all the render
-[types DocPad supports](https://github.com/bevry/docpad/wiki/Plugins). Depending
-on the types you want to convert, you will need to install the additional
-dependencies.
-
-For example if you would like to convert `css/style.css.styl` you would need to
-install the `docpad-plugin-stylus` module.
+Please view the
+[example](https://github.com/shama/grunt-docs/tree/master/example) for an
+example folder structure for converting file types.
 
 ## Contributing
 
@@ -53,6 +39,7 @@ Please use the issue tracker and pull requests.
 
 ## Release History
 
+* 0.5.0 Now just a wrapper for docpad generate.
 * 0.4.0 Support for Grunt v0.4. Update docpad version.
 * 0.3.1 Ability to set DocPad config with `options`.
 * 0.3.0 Update to DocPad 6.6.6. Refactor for migration to Grunt 0.4.
@@ -62,6 +49,5 @@ Please use the issue tracker and pull requests.
 
 ## License
 
-Copyright (c) 2012 Kyle Robinson Young
-
+Copyright (c) 2013 Kyle Robinson Young<br/>
 Licensed under the MIT license.

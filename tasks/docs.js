@@ -9,40 +9,25 @@
 module.exports = function(grunt) {
   'use strict';
 
-  var async = grunt.util.async;
-  var docs = require('./lib/docs');
-  var path = require('path');
+  var docpad = require('docpad');
 
-  grunt.registerMultiTask('docs', 'Produce docs with docpad', function() {
-    var options = this.options();
-
-    grunt.verbose.writeflags(options, 'Options');
-
+  grunt.registerTask('docs', 'Compile with DocPad', function() {
     var done = this.async();
+    var config = grunt.config(this.name || 'docs');
 
-    async.forEachSeries(this.files, function(file, next) {
-      file.dest = path.normalize(file.dest);
-      if (typeof file.src === 'string') {
-        file.src = [file.src];
+    // To allow paths config to use patterns
+    Object.keys(config).forEach(function(key) {
+      if (key.slice(-5) === 'Paths') {
+        config[key] = grunt.file.expand(config[key]);
       }
-      var srcFiles = grunt.file.expand(file.src);
+    });
 
-      if (srcFiles.length === 0) {
-        grunt.log.writeln('Unable to compile; no valid source files were found.');
-        return next();
-      }
-
-      docs.docpad(srcFiles, options, function(results) {
-        grunt.util._.each(results, function(data, filepath) {
-          var destPath = file.dest + docs.guessBasePath(filepath, file.orig.src);
-          grunt.file.write(destPath, data);
-          grunt.log.ok("File '" + destPath + "' created.");
-        });
-        next();
+    docpad.createInstance(config, function(err, inst) {
+      inst.action('generate', function(err) {
+        if (err) { return grunt.warn(err); }
+        done();
       });
-
-    }, done);
-
+    });
   });
 
 };
