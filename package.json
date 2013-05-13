@@ -1,7 +1,7 @@
 {
   "name": "grunt-docs",
   "description": "Grunt plugin for compiling with DocPad.",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "homepage": "https://github.com/shama/grunt-docs",
   "author": {
     "name": "Kyle Robinson Young",
@@ -29,12 +29,12 @@
     "test": "grunt nodeunit -v"
   },
   "dependencies": {
-    "docpad": "~6.21.10"
+    "docpad": "~6.34.1"
   },
   "devDependencies": {
     "docpad-plugin-eco": "~2.0.1",
     "docpad-plugin-marked": "~2.1.0",
-    "grunt": "~0.4.0",
+    "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.1.1"
   },
   "keywords": [

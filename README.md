@@ -39,6 +39,7 @@ Please use the issue tracker and pull requests.
 
 ## Release History
 
+* 0.5.1 Update docpad to latest.
 * 0.5.0 Now just a wrapper for docpad generate.
 * 0.4.0 Support for Grunt v0.4. Update docpad version.
 * 0.3.1 Ability to set DocPad config with `options`.
