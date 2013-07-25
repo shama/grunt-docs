@@ -2,9 +2,6 @@
 
 A grunt plugin to compile using [DocPad](http://docpad.org/).
 
-**ATTENTION: This plugin has changed completely on v0.5. It is now a thin
-wrapper for DocPad generate and not a multitask.**
-
 ## Getting Started
 
 Install this grunt plugin next to your project's
@@ -39,6 +36,7 @@ Please use the issue tracker and pull requests.
 
 ## Release History
 
+* 0.6.0 Update docpad to latest v6.46.3.
 * 0.5.1 Update docpad to latest.
 * 0.5.0 Now just a wrapper for docpad generate.
 * 0.4.0 Support for Grunt v0.4. Update docpad version.
