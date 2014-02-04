@@ -36,5 +36,9 @@
   "keywords": [
     "gruntplugin",
     "docpad"
+  ],
+  "files": [
+    "tasks",
+    "LICENSE-MIT"
   ]
 }
