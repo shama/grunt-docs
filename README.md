@@ -5,7 +5,7 @@ A grunt plugin to compile using [DocPad](http://docpad.org/).
 ## Getting Started
 
 Install this grunt plugin next to your project's
-[Gruntfile.js gruntfile][http://gruntjs.com/getting-started] with:
+[Gruntfile.js gruntfile](http://gruntjs.com/getting-started) with:
 `npm install grunt-docs`
 
 Then add this line to your project's `Grunfile.js` gruntfile:
