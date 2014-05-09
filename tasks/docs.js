@@ -22,11 +22,11 @@ module.exports = function(grunt) {
         var options = {};
 
         switch (key) {
-        case 'documentsPaths':
-        case 'filesPaths':
-        case 'layoutsPaths':
-          options.cwd = srcPath;
-          break;
+          case 'documentsPaths':
+          case 'filesPaths':
+          case 'layoutsPaths':
+            options.cwd = srcPath;
+            break;
         }
 
         config[key] = grunt.file.expand(options, config[key]);
