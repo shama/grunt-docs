@@ -25,15 +25,15 @@
     "node": ">= 0.8.0"
   },
   "devDependencies": {
-    "docpad": "~0.63.3",
+    "docpad": "~6.64.3",
     "docpad-plugin-eco": "~2.0.2",
-    "docpad-plugin-marked": "~2.1.1",
+    "docpad-plugin-marked": "~2.2.1",
     "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.6.0"
   },
   "peerDependencies": {
     "grunt": "~0.4.0",
-    "docpad": "^6.64.0"
+    "docpad": "~6.64.3"
   },
   "keywords": [
     "gruntplugin",
