@@ -14,11 +14,22 @@ module.exports = function(grunt) {
   grunt.registerTask('docs', 'Compile with DocPad', function() {
     var done = this.async();
     var config = grunt.config(this.name || 'docs');
+    var srcPath = config.srcPath || 'src';
 
     // To allow paths config to use patterns
     Object.keys(config).forEach(function(key) {
       if (key.slice(-5) === 'Paths') {
-        config[key] = grunt.file.expand(config[key]);
+        var options = {};
+
+        switch (key) {
+        case 'documentsPaths':
+        case 'filesPaths':
+        case 'layoutsPaths':
+          options.cwd = srcPath;
+          break;
+        }
+
+        config[key] = grunt.file.expand(options, config[key]);
       }
     });
 
