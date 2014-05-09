@@ -1,7 +1,7 @@
 {
   "name": "grunt-docs",
   "description": "Grunt plugin for compiling with DocPad.",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "homepage": "https://github.com/shama/grunt-docs",
   "author": {
     "name": "Kyle Robinson Young",
