@@ -32,7 +32,7 @@
     "grunt-contrib-jshint": "~0.6.0"
   },
   "peerDependencies": {
-    "grunt": "~0.4.0",
+    "grunt": ">=0.4.0",
     "docpad": "~6.64.3"
   },
   "keywords": [
