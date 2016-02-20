@@ -36,6 +36,7 @@ Please use the issue tracker and pull requests.
 
 ## Release History
 
+* 1.0.0 Update docpad and tag peer deps >=.
 * 0.8.0 Update docpad to latest v6.64.3. Docpad now installed as peerDep and set the correct Grunt working directory (@kasperisager).
 * 0.7.0 Update docpad to latest v6.63.3.
 * 0.6.0 Update docpad to latest v6.46.3.
